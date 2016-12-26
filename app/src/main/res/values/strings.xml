@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ActivityTracker</string>
+    <string name="accessibility_service_description">开启功能, 以跟踪栈顶 Activity</string>
+</resources>
