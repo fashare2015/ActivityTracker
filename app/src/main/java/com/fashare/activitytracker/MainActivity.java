@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                         REQUEST_CODE
                 );
-                Toast.makeText(this, "请先授予 ActivityTracker \"悬浮窗权限\"", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "请先授予 \"Activity 栈\" 悬浮窗权限", Toast.LENGTH_LONG).show();
             }
         }
     }
