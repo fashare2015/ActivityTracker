@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center">
 
@@ -33,10 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="className"
+            android:text="ClassName"
             android:textSize="18sp"
             android:textColor="#333333"/>
-
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.fashare.activitytracker;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
     private void checkOverlayPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivityForResult(intent, 1);
-                Toast.makeText(this, "请先授予 ActivityTracker \"悬浮窗权限\"", Toast.LENGTH_SHORT).show();
+                startActivityForResult(
+                        new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()))
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        REQUEST_CODE
+                );
+                Toast.makeText(this, "请先授予 ActivityTracker \"悬浮窗权限\"", Toast.LENGTH_LONG).show();
             }
         }
     }
-
-
 }

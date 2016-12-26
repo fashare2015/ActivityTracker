@@ -14,8 +14,11 @@ public class AccessibilityUtil {
         // 判断辅助功能是否开启
         if (!AccessibilityUtil.isAccessibilitySettingsOn(context)) {
             // 引导至辅助功能设置页面
-            context.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
-            Toast.makeText(context, "请先开启 ActivityTracker 辅助功能", Toast.LENGTH_SHORT).show();
+            context.startActivity(
+                    new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            );
+            Toast.makeText(context, "请先开启 ActivityTracker 辅助功能", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
