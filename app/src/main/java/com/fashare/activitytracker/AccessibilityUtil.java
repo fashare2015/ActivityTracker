@@ -16,7 +16,6 @@ public class AccessibilityUtil {
             // 引导至辅助功能设置页面
             context.startActivity(
                     new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             );
             Toast.makeText(context, "请先开启 \"Activity 栈\" 的辅助功能", Toast.LENGTH_LONG).show();
             return false;

@@ -2,6 +2,7 @@ package com.fashare.activitytracker;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
@@ -19,8 +20,8 @@ public class TrackerService extends AccessibilityService {
         super.onCreate();
     }
 
-    private void initTrackerWindowManager(){
-        if(mTrackerWindowManager == null)
+    private void initTrackerWindowManager() {
+        if (mTrackerWindowManager == null)
             mTrackerWindowManager = new TrackerWindowManager(this);
     }
 
@@ -30,7 +31,7 @@ public class TrackerService extends AccessibilityService {
         initTrackerWindowManager();
 
         String command = intent.getStringExtra(COMMAND);
-        if(command != null) {
+        if (command != null) {
             if (command.equals(COMMAND_OPEN))
                 mTrackerWindowManager.addView();
             else if (command.equals(COMMAND_CLOSE))
@@ -50,10 +51,14 @@ public class TrackerService extends AccessibilityService {
         Log.d(TAG, "onAccessibilityEvent: " + event.getPackageName());
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
 
-            EventBus.getDefault().post(new ActivityChangedEvent(
-                    event.getPackageName().toString(),
-                    event.getClassName().toString()
-            ));
+            CharSequence packageName = event.getPackageName();
+            CharSequence className = event.getClassName();
+            if (!TextUtils.isEmpty(packageName) && !TextUtils.isEmpty(className)) {
+                EventBus.getDefault().post(new ActivityChangedEvent(
+                        event.getPackageName().toString(),
+                        event.getClassName().toString()
+                ));
+            }
         }
     }
 
@@ -63,7 +68,7 @@ public class TrackerService extends AccessibilityService {
         Log.d(TAG, "onDestroy");
     }
 
-    public static class ActivityChangedEvent{
+    public static class ActivityChangedEvent {
         private final String mPackageName;
         private final String mClassName;
 
