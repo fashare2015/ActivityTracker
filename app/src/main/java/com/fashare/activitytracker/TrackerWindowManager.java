@@ -2,6 +2,7 @@ package com.fashare.activitytracker;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,7 +16,7 @@ public class TrackerWindowManager {
 
     public TrackerWindowManager(Context context) {
         mContext = context;
-        mWindowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
     }
 
     private View mFloatingView;
@@ -28,8 +29,14 @@ public class TrackerWindowManager {
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.gravity = Gravity.LEFT | Gravity.TOP;
-        params.type = WindowManager.LayoutParams.TYPE_PHONE;
+//        params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         params.format = PixelFormat.RGBA_8888;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            params.type = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+
         params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 
@@ -37,7 +44,7 @@ public class TrackerWindowManager {
     }
 
     public void addView() {
-        if(mFloatingView == null){
+        if (mFloatingView == null) {
             mFloatingView = new FloatingView(mContext);
             mFloatingView.setLayoutParams(LAYOUT_PARAMS);
 
@@ -45,8 +52,8 @@ public class TrackerWindowManager {
         }
     }
 
-    public void removeView(){
-        if(mFloatingView != null){
+    public void removeView() {
+        if (mFloatingView != null) {
             mWindowManager.removeView(mFloatingView);
             mFloatingView = null;
         }
